@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepali's Pre-Birthday Celebration</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --emerald: #2D6A4F; --emerald-light: #40916C; --emerald-pale: #74C69D;
+    --offwhite: #F5F0E8; --cream: #EDE8DC; --gold: #C9A84C;
+  }
+  html, body { min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  body {
+    background: var(--emerald);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding: 40px 16px 80px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .bg { position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 50%, #1B4332 0%, #2D6A4F 40%, #1B4332 100%); z-index: 0; }
+  .leaf { position: fixed; font-size: 1.2rem; opacity: 0; animation: floatLeaf linear infinite; z-index: 1; pointer-events: none; }
+  @keyframes floatLeaf {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.4; } 90%  { opacity: 0.2; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+  .noise { position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.3; z-index: 1; pointer-events: none; }
+  .card {
+    position: relative; z-index: 10; width: min(420px, 92vw);
+    background: var(--offwhite); border-radius: 3px; overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(64,145,108,0.2);
+    animation: cardReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(40px) scale(0.97); margin-top: 16px;
+  }
+  @keyframes cardReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
+  .card-top { background: var(--emerald); padding: 36px 32px 28px; text-align: center; position: relative; overflow: hidden; }
+  .card-top::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(116,198,157,0.2) 0%, transparent 70%); }
+  .pre-tag { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.25em; color: var(--emerald-pale); text-transform: uppercase; margin-bottom: 14px; opacity: 0; animation: fadeUp 0.6s 0.8s ease forwards; }
+  .name { font-size: clamp(2.6rem, 12vw, 4rem); font-weight: 300; font-style: italic; color: var(--offwhite); line-height: 1; letter-spacing: -0.01em; opacity: 0; animation: fadeUp 0.8s 1s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 18px auto; opacity: 0; animation: expandLine 0.8s 1.4s ease forwards; transform: scaleX(0); }
+  @keyframes expandLine { to { opacity: 1; transform: scaleX(1); } }
+  .subtitle { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--emerald-pale); text-transform: uppercase; opacity: 0; animation: fadeUp 0.6s 1.6s ease forwards; }
+  .card-body { padding: 32px 32px 32px; background: var(--offwhite); }
+  .detail-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .detail-row:nth-child(1) { animation-delay: 1.8s; }
+  .detail-row:nth-child(2) { animation-delay: 2.0s; }
+  .detail-row:nth-child(3) { animation-delay: 2.2s; }
+  .detail-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--emerald); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+  .detail-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--emerald-light); text-transform: uppercase; margin-bottom: 3px; }
+  .detail-value { font-size: 1.1rem; font-weight: 300; color: #2a2a2a; letter-spacing: 0.01em; }
+  .divider { border: none; border-top: 1px solid rgba(45,106,79,0.15); margin: 8px 0 24px; }
+  .footer-msg { text-align: center; font-style: italic; font-size: 1rem; color: #5a5a5a; line-height: 1.6; opacity: 0; animation: fadeUp 0.6s 2.4s ease forwards; }
+  .footer-msg span { color: var(--emerald); font-weight: 400; }
+
+  /* RSVP */
+  .rsvp-section { opacity: 0; animation: fadeUp 0.6s 2.6s ease forwards; margin-top: 24px; }
+  .rsvp-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--emerald-light); text-transform: uppercase; text-align: center; margin-bottom: 10px; }
+  .rsvp-input-row { display: flex; gap: 8px; }
+  .rsvp-input { flex: 1; padding: 11px 14px; border: 1px solid rgba(45,106,79,0.25); border-radius: 2px; background: white; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #2a2a2a; outline: none; transition: border-color 0.2s; }
+  .rsvp-input:focus { border-color: var(--emerald); }
+  .rsvp-input::placeholder { color: #aaa; font-style: italic; }
+  .rsvp-btn { padding: 11px 16px; background: var(--emerald); color: var(--offwhite); border: none; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.3s, transform 0.2s; white-space: nowrap; }
+  .rsvp-btn:hover { background: var(--emerald-light); transform: translateY(-1px); }
+  .rsvp-btn:active { transform: translateY(0); }
+
+  /* Guest list */
+  .guest-list-wrap { margin-top: 18px; display: none; }
+  .guest-list-wrap.has-guests { display: block; }
+  .guest-list-title { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--emerald-light); text-transform: uppercase; margin-bottom: 8px; text-align: center; }
+  .guest-list { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .guest-chip { background: var(--emerald); color: var(--offwhite); font-size: 0.82rem; font-style: italic; padding: 4px 12px; border-radius: 20px; animation: popIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; transform: scale(0.8); }
+  @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+
+  /* Confetti */
+  .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+
+  /* Sound */
+  .sound-btn { position: fixed; bottom: 20px; right: 20px; z-index: 50; background: rgba(245,240,232,0.15); border: 1px solid rgba(245,240,232,0.3); color: var(--offwhite); width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: background 0.3s, transform 0.2s; }
+  .sound-btn:hover { background: rgba(245,240,232,0.25); transform: scale(1.1); }
+  .sound-hint { position: fixed; bottom: 70px; right: 14px; z-index: 50; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; color: rgba(245,240,232,0.55); text-align: right; animation: fadeUp 0.6s 3.5s ease both; opacity: 0; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .sparkle { position: absolute; pointer-events: none; font-size: 0.8rem; animation: sparklePop 1.5s ease-in-out infinite; z-index: 5; }
+  @keyframes sparklePop { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<div class="leaf" style="left:8%;animation-duration:14s;animation-delay:0s;font-size:1rem;">🍃</div>
+<div class="leaf" style="left:22%;animation-duration:18s;animation-delay:3s;">🌿</div>
+<div class="leaf" style="left:55%;animation-duration:12s;animation-delay:6s;font-size:0.9rem;">🍃</div>
+<div class="leaf" style="left:75%;animation-duration:16s;animation-delay:1s;">🌿</div>
+<div class="leaf" style="left:90%;animation-duration:20s;animation-delay:9s;font-size:0.8rem;">🍃</div>
+
+<div class="card" id="card">
+  <div class="sparkle" style="top:12px;right:20px;animation-delay:0.3s;">✦</div>
+  <div class="sparkle" style="top:22px;right:42px;animation-delay:0.9s;font-size:0.5rem;">✦</div>
+  <div class="sparkle" style="top:8px;left:24px;animation-delay:1.5s;font-size:0.6rem;">✦</div>
+
+  <div class="card-top">
+    <p class="pre-tag">You're invited to celebrate</p>
+    <h1 class="name">Deepali's</h1>
+    <div class="gold-line"></div>
+    <p class="subtitle">Pre-birthday soirée</p>
+  </div>
+
+  <div class="card-body">
+    <div class="detail-row">
+      <div class="detail-icon">📅</div>
+      <div>
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Saturday, April 4th 2026</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">🕓</div>
+      <div>
+        <div class="detail-label">Time</div>
+        <div class="detail-value">4:04 PM — because why not 🥂</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">📍</div>
+      <div>
+        <div class="detail-label">Venue</div>
+        <div class="detail-value">Troy Rooftop</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p class="footer-msg">
+      Come as you are — just bring good vibes,<br>
+      good laughs, and <span>love for our girl</span> 🌿
+    </p>
+
+    <div class="rsvp-section">
+      <p class="rsvp-label">Will you be there?</p>
+      <div class="rsvp-input-row">
+        <input class="rsvp-input" id="rsvpName" type="text" placeholder="Your name…" maxlength="30" />
+        <button class="rsvp-btn" onclick="handleRSVP()">Count me in ✓</button>
+      </div>
+      <div class="guest-list-wrap" id="guestListWrap">
+        <div class="guest-list-title" id="guestListTitle">Coming along 🌿</div>
+        <ul class="guest-list" id="guestList"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sound-hint">tap to play music</div>
+<button class="sound-btn" id="soundBtn" title="Toggle sound" onclick="toggleSound()">🔇</button>
+
+<script>
+  // ── Audio ──────────────────────────────────────────────
+  let audioCtx = null;
+
+  function getCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+
+  function playChime() {
+    const ctx = getCtx();
+    [[523.25,0,0.7],[659.25,0.22,0.7],[783.99,0.44,0.9],[1046.5,0.68,1.3],[880,0.95,1.0],[1046.5,1.15,1.6]]
+    .forEach(([freq, start, dur]) => {
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+      gain.gain.setValueAtTime(0, ctx.currentTime + start);
+      gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + start + 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+      osc.start(ctx.currentTime + start);
+      osc.stop(ctx.currentTime + start + dur + 0.05);
+    });
+  }
+
+  let soundOn = false;
+  function toggleSound() {
+    soundOn = !soundOn;
+    document.getElementById('soundBtn').textContent = soundOn ? '🔔' : '🔇';
+    if (soundOn) playChime();
+  }
+
+  // ── RSVP ──────────────────────────────────────────────
+  let guests = [];
+  try { guests = JSON.parse(localStorage.getItem('deepali_rsvp') || '[]'); } catch(e) {}
+
+  function renderGuests() {
+    const list = document.getElementById('guestList');
+    const wrap = document.getElementById('guestListWrap');
+    const title = document.getElementById('guestListTitle');
+    list.innerHTML = '';
+    if (!guests.length) { wrap.classList.remove('has-guests'); return; }
+    wrap.classList.add('has-guests');
+    title.textContent = `Coming along (${guests.length}) 🌿`;
+    guests.forEach((name, i) => {
+      const li = document.createElement('li');
+      li.className = 'guest-chip';
+      li.textContent = name;
+      li.style.animationDelay = (i * 0.05) + 's';
+      list.appendChild(li);
+    });
+  }
+
+  function handleRSVP() {
+    const input = document.getElementById('rsvpName');
+    const name = input.value.trim();
+    if (!name) { input.focus(); input.style.borderColor = '#c0392b'; setTimeout(() => input.style.borderColor = '', 600); return; }
+    if (guests.map(g => g.toLowerCase()).includes(name.toLowerCase())) {
+      input.value = ''; input.placeholder = 'Already on the list! 🎉'; return;
+    }
+    guests.push(name);
+    try { localStorage.setItem('deepali_rsvp', JSON.stringify(guests)); } catch(e) {}
+    input.value = '';
+    input.placeholder = `See you there, ${name}! 🌿`;
+    renderGuests(); burst(); playChime();
+  }
+
+  document.getElementById('rsvpName').addEventListener('keydown', e => { if (e.key === 'Enter') handleRSVP(); });
+  renderGuests();
+
+  // ── Confetti ───────────────────────────────────────────
+  function burst() {
+    const wrap = document.getElementById('confettiWrap');
+    const colors = ['#2D6A4F','#74C69D','#C9A84C','#F5F0E8','#40916C','#EDE8DC'];
+    const shapes = ['●','▲','■','✦','♦'];
+    const rect = document.getElementById('card').getBoundingClientRect();
+    const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+      el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${8+Math.random()*10}px;opacity:1;pointer-events:none;z-index:200;`;
+      wrap.appendChild(el);
+      const a = Math.random()*Math.PI*2, d = 120+Math.random()*220;
+      el.animate([{transform:'translate(0,0) rotate(0deg)',opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${(Math.random()-.5)*720}deg)`,opacity:0}],
+        {duration:900+Math.random()*600,delay:Math.random()*200,easing:'cubic-bezier(0.1,0.8,0.3,1)',fill:'forwards'}).onfinish = () => el.remove();
+    }
+  }
+</script>
+</body>
+</html>
