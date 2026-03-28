@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepali's Pre-Birthday Celebration</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --emerald: #2D6A4F; --emerald-light: #40916C; --emerald-pale: #74C69D;
+    --offwhite: #F5F0E8; --cream: #EDE8DC; --gold: #C9A84C;
+  }
+  html, body { min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  body {
+    background: var(--emerald);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding: 40px 16px 80px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .bg { position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 50%, #1B4332 0%, #2D6A4F 40%, #1B4332 100%); z-index: 0; }
+  .leaf { position: fixed; font-size: 1.2rem; opacity: 0; animation: floatLeaf linear infinite; z-index: 1; pointer-events: none; }
+  @keyframes floatLeaf {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.4; } 90% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+  .noise { position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.3; z-index: 1; pointer-events: none; }
+
+  /* ── Card ── */
+  .card {
+    position: relative; z-index: 10; width: min(420px, 92vw);
+    background: var(--offwhite); border-radius: 3px; overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(64,145,108,0.2);
+    animation: cardReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(40px) scale(0.97); margin-top: 16px;
+  }
+  @keyframes cardReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
+  .card-top { background: var(--emerald); padding: 36px 32px 28px; text-align: center; position: relative; overflow: hidden; }
+  .card-top::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(116,198,157,0.2) 0%, transparent 70%); }
+  .pre-tag { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.25em; color: var(--emerald-pale); text-transform: uppercase; margin-bottom: 14px; opacity: 0; animation: fadeUp 0.6s 0.8s ease forwards; }
+  .name { font-size: clamp(2.6rem, 12vw, 4rem); font-weight: 300; font-style: italic; color: var(--offwhite); line-height: 1; letter-spacing: -0.01em; opacity: 0; animation: fadeUp 0.8s 1s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 18px auto; opacity: 0; animation: expandLine 0.8s 1.4s ease forwards; transform: scaleX(0); }
+  @keyframes expandLine { to { opacity: 1; transform: scaleX(1); } }
+  .subtitle { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--emerald-pale); text-transform: uppercase; opacity: 0; animation: fadeUp 0.6s 1.6s ease forwards; }
+  .card-body { padding: 32px 32px 32px; background: var(--offwhite); }
+  .detail-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .detail-row:nth-child(1) { animation-delay: 1.8s; }
+  .detail-row:nth-child(2) { animation-delay: 2.0s; }
+  .detail-row:nth-child(3) { animation-delay: 2.2s; }
+  .detail-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--emerald); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+  .detail-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--emerald-light); text-transform: uppercase; margin-bottom: 3px; }
+  .detail-value { font-size: 1.1rem; font-weight: 300; color: #2a2a2a; letter-spacing: 0.01em; }
+  .divider { border: none; border-top: 1px solid rgba(45,106,79,0.15); margin: 8px 0 24px; }
+  .footer-msg { text-align: center; font-style: italic; font-size: 1rem; color: #5a5a5a; line-height: 1.6; opacity: 0; animation: fadeUp 0.6s 2.4s ease forwards; }
+  .footer-msg span { color: var(--emerald); font-weight: 400; }
+
+  /* ── RSVP Section ── */
+  .rsvp-section { opacity: 0; animation: fadeUp 0.6s 2.6s ease forwards; margin-top: 24px; }
+  .rsvp-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--emerald-light); text-transform: uppercase; text-align: center; margin-bottom: 14px; }
+
+  /* Step 1: Yes / Can't make it */
+  .rsvp-choice { display: flex; gap: 10px; }
+  .choice-btn { flex: 1; padding: 13px 10px; border: 1.5px solid transparent; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.25s; }
+  .choice-yes { background: var(--emerald); color: var(--offwhite); }
+  .choice-yes:hover { background: var(--emerald-light); transform: translateY(-2px); }
+  .choice-no { background: transparent; color: #888; border-color: rgba(0,0,0,0.15); }
+  .choice-no:hover { background: rgba(0,0,0,0.04); transform: translateY(-2px); }
+
+  /* Step 2: Name input (shown after Yes) */
+  .rsvp-name-step { display: none; margin-top: 4px; }
+  .rsvp-name-step.active { display: block; animation: fadeUp 0.4s ease forwards; }
+  .back-link { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; color: #aaa; text-transform: uppercase; cursor: pointer; margin-bottom: 10px; display: inline-block; }
+  .back-link:hover { color: var(--emerald); }
+  .rsvp-input-row { display: flex; gap: 8px; }
+  .rsvp-input { flex: 1; padding: 11px 14px; border: 1px solid rgba(45,106,79,0.25); border-radius: 2px; background: white; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #2a2a2a; outline: none; transition: border-color 0.2s; }
+  .rsvp-input:focus { border-color: var(--emerald); }
+  .rsvp-input::placeholder { color: #aaa; font-style: italic; }
+  .rsvp-btn { padding: 11px 16px; background: var(--emerald); color: var(--offwhite); border: none; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.3s, transform 0.2s; white-space: nowrap; }
+  .rsvp-btn:hover { background: var(--emerald-light); transform: translateY(-1px); }
+
+  /* ── Full-screen response overlays ── */
+  .response-screen {
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 48px 32px; text-align: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.7s ease;
+  }
+  .response-screen.visible { opacity: 1; pointer-events: all; }
+  .yes-screen { background: radial-gradient(ellipse at 50% 40%, #1a3d2b 0%, #0c2019 100%); }
+  .no-screen  { background: radial-gradient(ellipse at 50% 40%, #2c2c2c 0%, #111 100%); }
+
+  .resp-icon { font-size: 4rem; margin-bottom: 24px; display: block; animation: bounceIn 0.7s 0.2s cubic-bezier(0.16,1,0.3,1) both; }
+  @keyframes bounceIn { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .resp-title { font-size: clamp(2.2rem, 10vw, 3.4rem); font-weight: 300; font-style: italic; color: var(--offwhite); margin-bottom: 14px; animation: fadeUp 0.6s 0.5s ease both; opacity: 0; }
+  .resp-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; line-height: 2; animation: fadeUp 0.6s 0.75s ease both; opacity: 0; }
+  .yes-screen .resp-sub { color: var(--emerald-pale); }
+  .no-screen  .resp-sub { color: rgba(245,240,232,0.4); }
+  .resp-gold-line { width: 36px; height: 1px; background: var(--gold); margin: 18px auto 20px; animation: expandLine 0.6s 0.6s ease both; transform: scaleX(0); opacity: 0; }
+
+  /* ── Confetti ── */
+  .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 400; }
+
+  /* ── Sound ── */
+  .sound-btn { position: fixed; bottom: 20px; right: 20px; z-index: 50; background: rgba(245,240,232,0.15); border: 1px solid rgba(245,240,232,0.3); color: var(--offwhite); width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: background 0.3s, transform 0.2s; }
+  .sound-btn:hover { background: rgba(245,240,232,0.25); transform: scale(1.1); }
+  .sound-hint { position: fixed; bottom: 70px; right: 14px; z-index: 50; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; color: rgba(245,240,232,0.55); text-align: right; animation: fadeUp 0.6s 3.5s ease both; opacity: 0; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .sparkle { position: absolute; pointer-events: none; font-size: 0.8rem; animation: sparklePop 1.5s ease-in-out infinite; z-index: 5; }
+  @keyframes sparklePop { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<div class="leaf" style="left:8%;animation-duration:14s;animation-delay:0s;font-size:1rem;">🍃</div>
+<div class="leaf" style="left:22%;animation-duration:18s;animation-delay:3s;">🌿</div>
+<div class="leaf" style="left:55%;animation-duration:12s;animation-delay:6s;font-size:0.9rem;">🍃</div>
+<div class="leaf" style="left:75%;animation-duration:16s;animation-delay:1s;">🌿</div>
+<div class="leaf" style="left:90%;animation-duration:20s;animation-delay:9s;font-size:0.8rem;">🍃</div>
+
+<!-- ── The Card ── -->
+<div class="card" id="card">
+  <div class="sparkle" style="top:12px;right:20px;animation-delay:0.3s;">✦</div>
+  <div class="sparkle" style="top:22px;right:42px;animation-delay:0.9s;font-size:0.5rem;">✦</div>
+  <div class="sparkle" style="top:8px;left:24px;animation-delay:1.5s;font-size:0.6rem;">✦</div>
+
+  <div class="card-top">
+    <p class="pre-tag">You're invited to celebrate</p>
+    <h1 class="name">Deepali's</h1>
+    <div class="gold-line"></div>
+    <p class="subtitle">Pre-birthday soirée</p>
+  </div>
+
+  <div class="card-body">
+    <div class="detail-row">
+      <div class="detail-icon">📅</div>
+      <div>
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Saturday, April 4th 2026</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">🕓</div>
+      <div>
+        <div class="detail-label">Time</div>
+        <div class="detail-value">4:04 PM — because why not 🥂</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">📍</div>
+      <div>
+        <div class="detail-label">Venue</div>
+        <div class="detail-value">Troy Rooftop</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p class="footer-msg">
+      Come as you are — just bring good vibes,<br>
+      good laughs, and <span>love for our girl</span> 🌿
+    </p>
+
+    <!-- RSVP -->
+    <div class="rsvp-section">
+      <p class="rsvp-label">Will you be there?</p>
+
+      <!-- Step 1: Choice -->
+      <div class="rsvp-choice" id="rsvpChoice">
+        <button class="choice-btn choice-yes" onclick="showNameStep()">🥂 &nbsp;Count me in!</button>
+        <button class="choice-btn choice-no"  onclick="showSorryScreen()">😔 &nbsp;Can't make it</button>
+      </div>
+
+      <!-- Step 2: Name (shown after Yes) -->
+      <div class="rsvp-name-step" id="rsvpNameStep">
+        <span class="back-link" onclick="backToChoice()">← go back</span>
+        <div class="rsvp-input-row">
+          <input class="rsvp-input" id="rsvpName" type="text" placeholder="Your name…" maxlength="30" />
+          <button class="rsvp-btn" onclick="handleRSVP()">Submit ✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Thank You Screen (Yes) ── -->
+<div class="response-screen yes-screen" id="yesScreen">
+  <span class="resp-icon">🥂</span>
+  <h2 class="resp-title" id="yesTitle">See you there!</h2>
+  <div class="resp-gold-line"></div>
+  <p class="resp-sub">You're on the list 🌿<br>Saturday · April 4th · 4:04 PM<br>Troy Rooftop</p>
+</div>
+
+<!-- ── Sorry Screen (No) ── -->
+<div class="response-screen no-screen" id="noScreen">
+  <span class="resp-icon">🌿</span>
+  <h2 class="resp-title">We'll miss you!</h2>
+  <div class="resp-gold-line"></div>
+  <p class="resp-sub">No worries at all —<br>we'll celebrate with you another time 💚</p>
+</div>
+
+<div class="sound-hint">tap to play music</div>
+<button class="sound-btn" id="soundBtn" title="Toggle sound" onclick="toggleSound()">🔇</button>
+
+<script>
+  // ── Audio ──
+  function buildChimeURL() {
+    const sampleRate = 44100, duration = 2.5;
+    const numSamples = Math.floor(sampleRate * duration);
+    const buffer = new ArrayBuffer(44 + numSamples * 2);
+    const view = new DataView(buffer);
+    function ws(v,o,s){for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));}
+    ws(view,0,'RIFF'); view.setUint32(4,36+numSamples*2,true);
+    ws(view,8,'WAVE'); ws(view,12,'fmt ');
+    view.setUint32(16,16,true); view.setUint16(20,1,true); view.setUint16(22,1,true);
+    view.setUint32(24,sampleRate,true); view.setUint32(28,sampleRate*2,true);
+    view.setUint16(32,2,true); view.setUint16(34,16,true);
+    ws(view,36,'data'); view.setUint32(40,numSamples*2,true);
+    const notes=[[523.25,0],[659.25,0.22],[783.99,0.44],[1046.5,0.68],[880,0.95],[1046.5,1.15]];
+    const samples=new Float32Array(numSamples);
+    notes.forEach(([freq,start])=>{
+      const s=Math.floor(start*sampleRate),len=Math.floor(0.8*sampleRate);
+      for(let i=0;i<len&&s+i<numSamples;i++){
+        samples[s+i]+=Math.sin(2*Math.PI*freq*i/sampleRate)*Math.exp(-i/(sampleRate*0.35))*0.25;
+      }
+    });
+    for(let i=0;i<numSamples;i++) view.setInt16(44+i*2,Math.max(-32768,Math.min(32767,samples[i]*32767)),true);
+    return URL.createObjectURL(new Blob([buffer],{type:'audio/wav'}));
+  }
+  let chimeURL=null, soundOn=false;
+  function playChime(){
+    try{
+      if(!chimeURL) chimeURL=buildChimeURL();
+      const a=new Audio(chimeURL); a.volume=0.7;
+      a.play().catch(()=>{});
+    }catch(e){}
+  }
+  function toggleSound(){
+    soundOn=!soundOn;
+    document.getElementById('soundBtn').textContent=soundOn?'🔔':'🔇';
+    if(soundOn) playChime();
+  }
+
+  // ── RSVP flow ──
+  function showNameStep(){
+    document.getElementById('rsvpChoice').style.display='none';
+    const step=document.getElementById('rsvpNameStep');
+    step.classList.add('active');
+    setTimeout(()=>document.getElementById('rsvpName').focus(),300);
+  }
+
+  function backToChoice(){
+    document.getElementById('rsvpNameStep').classList.remove('active');
+    document.getElementById('rsvpChoice').style.display='flex';
+  }
+
+  const TG_TOKEN = '8700106366:AAFVTpUb70-ZMllMZ2Zx516HnhU0dvx_u8M';
+  const TG_CHAT  = '7617459479';
+
+  function notifyHost(msg){
+    fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({chat_id: TG_CHAT, text: msg, parse_mode: 'HTML'})
+    }).catch(()=>{});
+  }
+
+  function handleRSVP(){
+    const input=document.getElementById('rsvpName');
+    const name=input.value.trim();
+    if(!name){ input.focus(); input.style.borderColor='#c0392b'; setTimeout(()=>input.style.borderColor='',600); return; }
+    // Notify host on Telegram
+    notifyHost('\uD83E\uDD42 <b>' + name + '</b> is coming to Deepali\'s pre-birthday soiree! \uD83C\uDF3F');
+    // Update thank you title
+    document.getElementById('yesTitle').textContent=`See you there, ${name}!`;
+    // Show thank you screen
+    burst();
+    playChime();
+    setTimeout(()=>{
+      document.getElementById('yesScreen').classList.add('visible');
+    }, 400);
+  }
+
+  function showSorryScreen(){
+    const name = document.getElementById('rsvpName').value.trim();
+    const label = name || 'Someone';
+    notifyHost('\uD83D\uDE14 <b>' + label + '</b> can\'t make it to Deepali\'s pre-birthday.');
+    document.getElementById('noScreen').classList.add('visible');
+  }
+
+  document.getElementById('rsvpName').addEventListener('keydown',e=>{ if(e.key==='Enter') handleRSVP(); });
+
+  // ── Confetti ──
+  function burst(){
+    const wrap=document.getElementById('confettiWrap');
+    const colors=['#2D6A4F','#74C69D','#C9A84C','#F5F0E8','#40916C','#EDE8DC'];
+    const shapes=['●','▲','■','✦','♦'];
+    const W=window.innerWidth, H=window.innerHeight;
+    const cx=W/2, cy=H/2;
+    for(let i=0;i<70;i++){
+      const el=document.createElement('div');
+      el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText=`position:fixed;left:${cx}px;top:${cy}px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${8+Math.random()*12}px;opacity:1;pointer-events:none;z-index:500;`;
+      wrap.appendChild(el);
+      const a=Math.random()*Math.PI*2, d=140+Math.random()*260;
+      el.animate([{transform:'translate(0,0) rotate(0deg)',opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${(Math.random()-.5)*720}deg)`,opacity:0}],
+        {duration:1000+Math.random()*600,delay:Math.random()*200,easing:'cubic-bezier(0.1,0.8,0.3,1)',fill:'forwards'}).onfinish=()=>el.remove();
+    }
+  }
+</script>
+</body>
+</html>
