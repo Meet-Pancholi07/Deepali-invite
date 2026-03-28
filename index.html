@@ -4,113 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deepali's Pre-Birthday Celebration</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --blue:      #7BAFC9;
-    --blue-soft: #A8CCE0;
-    --blue-pale: #D6EAF3;
-    --white:     #FFFFFF;
-    --offwhite:  #FAFCFE;
-    --gold:      #C8A96E;
-    --text:      #2C4A5A;
-    --text-soft: #7A9AAA;
+    --sky: #C2DFF0;
+    --sky-mid: #A8D4EC;
+    --sky-deep: #7BBCDF;
+    --blush: #F2D6D6;
+    --blush-soft: #FAF0EE;
+    --white: #FFFFFF;
+    --offwhite: #FDFAF8;
+    --gold: #D4A853;
+    --rose: #D4829A;
+    --text: #3a3a3a;
+    --text-soft: #7a6f6f;
   }
-
   html, body { min-height: 100%; overflow-x: hidden; overflow-y: auto; }
-
   body {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: flex-start; padding: 48px 16px 80px;
-    font-family: 'Montserrat', sans-serif;
-    background: #EAF4FA;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding: 40px 16px 80px;
+    font-family: 'Lato', sans-serif;
+    background: #C8E8F5;
   }
 
+  /* Sky gradient background */
   .bg {
     position: fixed; inset: 0; z-index: 0;
-    background: linear-gradient(180deg, #F0F8FD 0%, #D6EAF3 45%, #EAF4FA 100%);
+    background: linear-gradient(180deg,
+      #E8F6FF 0%,
+      #C8E8F7 25%,
+      #B0D9F0 55%,
+      #F9EEF0 85%,
+      #F5E6EA 100%
+    );
   }
 
-  /* Subtle horizon line */
+  /* Soft sun glow top right */
+  .bg::before {
+    content: '';
+    position: fixed;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,230,180,0.45) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  /* Horizon blush haze at bottom */
   .bg::after {
     content: '';
-    position: fixed; bottom: 0; left: 0; right: 0; height: 40%;
-    background: linear-gradient(to top, rgba(255,255,255,0.6) 0%, transparent 100%);
-    z-index: 0; pointer-events: none;
+    position: fixed; bottom: 0; left: 0; right: 0; height: 35%;
+    background: linear-gradient(to top, rgba(242,214,214,0.5) 0%, transparent 100%);
+    z-index: 0;
+    pointer-events: none;
   }
 
-  .noise {
-    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.25;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  .noise { position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"); opacity: 0.5; z-index: 1; pointer-events: none; }
+
+  /* Floating petals / sparkle blobs */
+  .petal {
+    position: fixed; pointer-events: none; z-index: 1;
+    border-radius: 50% 10% 50% 10%;
+    animation: floatPetal ease-in-out infinite;
+    opacity: 0.18;
+  }
+  @keyframes floatPetal {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%       { transform: translateY(-20px) rotate(15deg); }
   }
 
   /* Card */
   .card {
     position: relative; z-index: 10; width: min(400px, 92vw);
-    background: var(--white);
-    border-radius: 2px;
+    background: var(--offwhite);
+    border-radius: 20px; overflow: hidden;
     box-shadow:
-      0 0 0 1px rgba(123,175,201,0.15),
-      0 2px 4px rgba(123,175,201,0.08),
-      0 24px 60px rgba(100,150,180,0.16);
-    animation: cardReveal 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
-    opacity: 0; transform: translateY(30px) scale(0.98);
-    margin-top: 8px;
+      0 0 0 1px rgba(212,168,83,0.2),
+      0 24px 70px rgba(120,160,200,0.25),
+      0 4px 20px rgba(212,130,154,0.15);
+    animation: cardReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(40px) scale(0.97); margin-top: 16px;
   }
-  @keyframes cardReveal { to { opacity:1; transform:translateY(0) scale(1); } }
+  @keyframes cardReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
 
-  /* Thin top accent line */
-  .card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent 0%, var(--blue-soft) 30%, var(--blue) 50%, var(--blue-soft) 70%, transparent 100%);
-  }
-
-  /* Header */
+  /* Card top — sky blue with feminine feel */
   .card-top {
-    background: var(--white);
-    padding: 48px 36px 36px;
-    text-align: center;
-    position: relative;
-    border-bottom: 1px solid var(--blue-pale);
+    background: linear-gradient(145deg, #A8D4EC 0%, #C8E8F7 40%, #E8D5E8 100%);
+    padding: 40px 32px 34px; text-align: center; position: relative; overflow: hidden;
+  }
+  /* Dreamy glow */
+  .card-top::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 0%, rgba(255,255,255,0.6) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 100%, rgba(212,130,154,0.2) 0%, transparent 55%);
+  }
+  /* Wavy bottom edge */
+  .card-top::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 28px;
+    background: var(--offwhite);
+    border-radius: 50% 50% 0 0 / 28px 28px 0 0;
   }
 
   .pre-tag {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.58rem; letter-spacing: 0.35em; color: var(--blue-soft);
-    text-transform: uppercase; margin-bottom: 18px;
+    font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.28em;
+    color: var(--rose); text-transform: uppercase; margin-bottom: 16px;
     opacity: 0; animation: fadeUp 0.6s 0.8s ease forwards;
   }
-
   .name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 13vw, 4.6rem); font-weight: 300; font-style: italic;
-    color: var(--text); line-height: 1; letter-spacing: 0.01em;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 13vw, 4.4rem); font-weight: 300; font-style: italic;
+    color: #2a5a7a; line-height: 1; letter-spacing: -0.01em;
     opacity: 0; animation: fadeUp 0.8s 1s cubic-bezier(0.16,1,0.3,1) forwards;
+    text-shadow: 0 2px 12px rgba(255,255,255,0.6);
   }
-
   .gold-line {
-    width: 36px; height: 1px;
-    background: var(--gold);
-    margin: 22px auto;
-    opacity: 0; transform: scaleX(0);
-    animation: expandLine 0.8s 1.4s ease forwards;
+    width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 20px auto; opacity: 0; animation: expandLine 0.8s 1.4s ease forwards; transform: scaleX(0);
   }
-  @keyframes expandLine { to { opacity:1; transform:scaleX(1); } }
-
+  @keyframes expandLine { to { opacity: 1; transform: scaleX(1); } }
   .subtitle {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.55rem; letter-spacing: 0.35em; color: var(--blue-soft);
-    text-transform: uppercase;
+    font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.3em;
+    color: #7aaccc; text-transform: uppercase;
     opacity: 0; animation: fadeUp 0.6s 1.6s ease forwards;
   }
 
-  /* Body */
-  .card-body { padding: 36px 36px 32px; }
+  /* Sparkles in header */
+  .sparkle {
+    position: absolute; pointer-events: none; z-index: 5;
+    animation: sparklePop 2s ease-in-out infinite;
+    color: rgba(212,168,83,0.7); font-size: 0.75rem;
+  }
+  @keyframes sparklePop { 0%,100%{opacity:0;transform:scale(0.4);} 50%{opacity:1;transform:scale(1.1);} }
+
+  /* Card body */
+  .card-body { padding: 30px 30px 30px; background: var(--offwhite); }
 
   .detail-row {
-    display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px;
+    display: flex; align-items: flex-start; gap: 13px; margin-bottom: 18px;
     opacity: 0; animation: fadeUp 0.6s ease forwards;
   }
   .detail-row:nth-child(1) { animation-delay: 1.8s; }
@@ -118,150 +150,123 @@
   .detail-row:nth-child(3) { animation-delay: 2.2s; }
 
   .detail-icon {
-    width: 34px; height: 34px; flex-shrink: 0; margin-top: 1px;
-    border: 1px solid var(--blue-pale);
-    border-radius: 50%;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, #C8E8F7, #E8D5E8);
+    border: 1px solid rgba(212,168,83,0.2);
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem;
-    background: var(--offwhite);
+    font-size: 0.9rem; flex-shrink: 0; margin-top: 1px;
   }
-
   .detail-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 400;
-    font-size: 0.52rem; letter-spacing: 0.25em; color: var(--blue-soft);
-    text-transform: uppercase; margin-bottom: 4px;
+    font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.22em;
+    color: var(--rose); text-transform: uppercase; margin-bottom: 3px;
   }
-
-  .detail-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem; font-weight: 300; color: var(--text); letter-spacing: 0.02em;
-  }
+  .detail-value { font-size: 1.05rem; font-weight: 300; color: var(--text); letter-spacing: 0.01em; }
 
   .divider {
-    border: none; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blue-pale), transparent);
-    margin: 4px 0 26px;
+    border: none; margin: 18px 0 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,130,154,0.2), transparent);
   }
 
   .footer-msg {
-    text-align: center;
-    font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: 1.05rem; color: var(--text-soft); line-height: 1.8;
+    text-align: center; font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1rem; color: var(--text-soft); line-height: 1.7;
     opacity: 0; animation: fadeUp 0.6s 2.4s ease forwards;
   }
-  .footer-msg span { color: var(--blue); }
+  .footer-msg span { color: var(--rose); font-weight: 400; }
 
   /* RSVP */
-  .rsvp-section {
-    opacity: 0; animation: fadeUp 0.6s 2.6s ease forwards;
-    margin-top: 26px;
-  }
-
+  .rsvp-section { opacity: 0; animation: fadeUp 0.6s 2.6s ease forwards; margin-top: 22px; }
   .rsvp-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.55rem; letter-spacing: 0.3em; color: var(--blue-soft);
-    text-transform: uppercase; text-align: center; margin-bottom: 14px;
+    font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.22em;
+    color: #7aaccc; text-transform: uppercase; text-align: center; margin-bottom: 14px;
   }
-
   .rsvp-choice { display: flex; gap: 10px; }
-
   .choice-btn {
-    flex: 1; padding: 13px 10px;
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
-    cursor: pointer; border-radius: 1px; transition: all 0.25s;
+    flex: 1; padding: 13px 10px; border: 1.5px solid transparent;
+    font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; border-radius: 30px; transition: all 0.25s;
   }
-
   .choice-yes {
-    background: var(--text); color: var(--white); border: 1px solid var(--text);
+    background: linear-gradient(135deg, #A8D4EC, #C8A8CC);
+    color: var(--white); border-color: transparent;
+    box-shadow: 0 4px 14px rgba(168,212,236,0.4);
   }
-  .choice-yes:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); }
-
+  .choice-yes:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(168,212,236,0.5); }
   .choice-no {
-    background: transparent; color: var(--text-soft);
-    border: 1px solid var(--blue-pale);
+    background: transparent; color: #bbb;
+    border-color: rgba(0,0,0,0.1); border-radius: 30px;
   }
-  .choice-no:hover { border-color: var(--blue-soft); color: var(--text); transform: translateY(-2px); }
+  .choice-no:hover { background: rgba(0,0,0,0.03); transform: translateY(-2px); }
 
   .rsvp-name-step { display: none; margin-top: 4px; }
   .rsvp-name-step.active { display: block; animation: fadeUp 0.4s ease forwards; }
-
   .back-link {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.5rem; letter-spacing: 0.2em; color: #ccc;
-    text-transform: uppercase; cursor: pointer; margin-bottom: 12px; display: inline-block;
+    font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 0.15em;
+    color: #ccc; text-transform: uppercase; cursor: pointer; margin-bottom: 10px; display: inline-block;
   }
-  .back-link:hover { color: var(--blue); }
-
+  .back-link:hover { color: var(--rose); }
   .rsvp-input-row { display: flex; gap: 8px; }
-
   .rsvp-input {
-    flex: 1; padding: 12px 16px;
-    border: 1px solid var(--blue-pale); border-radius: 1px;
-    background: var(--offwhite);
-    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem;
+    flex: 1; padding: 11px 16px; border: 1.5px solid rgba(168,212,236,0.4);
+    border-radius: 30px; background: white;
+    font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem;
     color: var(--text); outline: none; transition: border-color 0.2s;
   }
-  .rsvp-input:focus { border-color: var(--blue-soft); }
-  .rsvp-input::placeholder { color: #C8D8E4; }
-
+  .rsvp-input:focus { border-color: var(--sky-deep); }
+  .rsvp-input::placeholder { color: #ccc; }
   .rsvp-btn {
-    padding: 12px 18px;
-    background: var(--text); color: var(--white);
-    border: none; border-radius: 1px;
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
-    cursor: pointer; white-space: nowrap; transition: all 0.25s;
+    padding: 11px 18px;
+    background: linear-gradient(135deg, #A8D4EC, #C8A8CC);
+    color: white; border: none;
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; border-radius: 30px;
+    transition: all 0.3s; white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(168,212,236,0.35);
   }
-  .rsvp-btn:hover { background: var(--blue); transform: translateY(-1px); }
-  .rsvp-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .rsvp-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(168,212,236,0.5); }
+  .rsvp-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
   /* Response screens */
   .response-screen {
     position: fixed; inset: 0; z-index: 300;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 48px 32px; text-align: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
+    opacity: 0; pointer-events: none; transition: opacity 0.7s ease;
   }
   .response-screen.visible { opacity: 1; pointer-events: all; }
-
-  .yes-screen { background: linear-gradient(180deg, #F0F8FD 0%, #FFFFFF 100%); }
-  .no-screen  { background: linear-gradient(180deg, #F7F7F7 0%, #FFFFFF 100%); }
-
-  .resp-icon {
-    font-size: 2.4rem; margin-bottom: 28px; display: block;
-    animation: bounceIn 0.7s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+  .yes-screen {
+    background: linear-gradient(160deg, #C8E8F7 0%, #E8D5E8 50%, #F9EEF0 100%);
   }
-  @keyframes bounceIn { from { transform:scale(0.4); opacity:0; } to { transform:scale(1); opacity:1; } }
-
+  .no-screen {
+    background: linear-gradient(160deg, #e8e8e8 0%, #f5f0f0 100%);
+  }
+  .resp-icon { font-size: 4rem; margin-bottom: 24px; display: block; animation: bounceIn 0.7s 0.2s cubic-bezier(0.16,1,0.3,1) both; }
+  @keyframes bounceIn { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   .resp-title {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
-    font-size: clamp(2.4rem, 10vw, 3.6rem); margin-bottom: 16px;
-    animation: fadeUp 0.6s 0.5s ease both; opacity: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 10vw, 3.4rem); font-weight: 300; font-style: italic;
+    margin-bottom: 14px; animation: fadeUp 0.6s 0.5s ease both; opacity: 0;
   }
-  .yes-screen .resp-title { color: var(--text); }
-  .no-screen  .resp-title { color: #999; }
-
+  .yes-screen .resp-title { color: #2a5a7a; }
+  .no-screen  .resp-title { color: #777; }
+  .resp-sub {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; line-height: 2.2;
+    animation: fadeUp 0.6s 0.75s ease both; opacity: 0;
+  }
+  .yes-screen .resp-sub { color: var(--rose); }
+  .no-screen  .resp-sub { color: #aaa; }
   .resp-gold-line {
-    width: 36px; height: 1px; background: var(--gold);
-    margin: 0 auto 20px;
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto 22px;
     animation: expandLine 0.6s 0.6s ease both; transform: scaleX(0); opacity: 0;
   }
 
-  .resp-sub {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; line-height: 2.2;
-    animation: fadeUp 0.6s 0.75s ease both; opacity: 0;
-  }
-  .yes-screen .resp-sub { color: var(--blue-soft); }
-  .no-screen  .resp-sub { color: #bbb; }
-
   .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 400; }
 
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(14px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
@@ -270,7 +275,18 @@
 <div class="noise"></div>
 <div class="confetti-wrap" id="confettiWrap"></div>
 
+<!-- Floating soft blobs -->
+<div class="petal" style="width:200px;height:160px;top:3%;left:-5%;background:#A8D4EC;animation-duration:8s;animation-delay:0s;"></div>
+<div class="petal" style="width:120px;height:100px;top:18%;right:-3%;background:#E8C5D0;animation-duration:10s;animation-delay:1.5s;"></div>
+<div class="petal" style="width:90px;height:70px;bottom:20%;left:2%;background:#C8E8F7;animation-duration:7s;animation-delay:2s;"></div>
+<div class="petal" style="width:160px;height:130px;bottom:4%;right:-2%;background:#F2D6D6;animation-duration:9s;animation-delay:0.5s;"></div>
+<div class="petal" style="width:70px;height:55px;top:50%;left:3%;background:#D4B8E0;animation-duration:11s;animation-delay:3s;opacity:0.12;"></div>
+
 <div class="card" id="card">
+  <div class="sparkle" style="top:14px;right:22px;animation-delay:0.3s;">✦</div>
+  <div class="sparkle" style="top:26px;right:44px;animation-delay:1s;font-size:0.5rem;">✦</div>
+  <div class="sparkle" style="top:10px;left:26px;animation-delay:1.7s;font-size:0.55rem;">✦</div>
+  <div class="sparkle" style="top:50px;left:14px;animation-delay:0.7s;font-size:0.4rem;">✦</div>
 
   <div class="card-top">
     <p class="pre-tag">You're invited to celebrate</p>
@@ -306,40 +322,40 @@
 
     <p class="footer-msg">
       Come as you are — just bring good vibes,<br>
-      good laughs, and <span>love for our girl</span> 🤍
+      good laughs, and <span>love for our girl</span> 🌸
     </p>
 
     <div class="rsvp-section">
       <p class="rsvp-label">Will you be there?</p>
       <div class="rsvp-choice" id="rsvpChoice">
-        <button class="choice-btn choice-yes" onclick="showNameStep()">🥂 &nbsp;Count me in</button>
-        <button class="choice-btn choice-no"  onclick="submitRSVP('no')">😔 &nbsp;Can't make it</button>
+        <button class="choice-btn choice-yes" onclick="showNameStep()">🥂 Count me in!</button>
+        <button class="choice-btn choice-no"  onclick="submitRSVP('no')">😔 Can't make it</button>
       </div>
       <div class="rsvp-name-step" id="rsvpNameStep">
         <span class="back-link" onclick="backToChoice()">← go back</span>
         <div class="rsvp-input-row">
           <input class="rsvp-input" id="rsvpName" type="text" placeholder="Your name…" maxlength="30" />
-          <button class="rsvp-btn" id="submitBtn" onclick="submitRSVP('yes')">Submit</button>
+          <button class="rsvp-btn" id="submitBtn" onclick="submitRSVP('yes')">Submit ✓</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Thank You -->
+<!-- Thank You Screen -->
 <div class="response-screen yes-screen" id="yesScreen">
   <span class="resp-icon">🥂</span>
   <h2 class="resp-title" id="yesTitle">See you there!</h2>
   <div class="resp-gold-line"></div>
-  <p class="resp-sub">You're on the list 🤍<br>Thursday · April 3rd · 3:03 PM<br>Troy Rooftop</p>
+  <p class="resp-sub">You're on the list 🌸<br>Thursday · April 3rd · 3:03 PM<br>Troy Rooftop</p>
 </div>
 
-<!-- Sorry -->
+<!-- Sorry Screen -->
 <div class="response-screen no-screen" id="noScreen">
-  <span class="resp-icon">🤍</span>
-  <h2 class="resp-title">We'll miss you</h2>
+  <span class="resp-icon">🌸</span>
+  <h2 class="resp-title">We'll miss you!</h2>
   <div class="resp-gold-line"></div>
-  <p class="resp-sub">No worries at all —<br>we'll celebrate with you another time</p>
+  <p class="resp-sub">No worries at all —<br>we'll celebrate with you another time 💕</p>
 </div>
 
 <script>
@@ -374,12 +390,7 @@
     if (response === 'yes') {
       const input = document.getElementById('rsvpName');
       const name  = input.value.trim();
-      if (!name) {
-        input.focus();
-        input.style.borderColor = '#A8CCE0';
-        setTimeout(() => input.style.borderColor = '', 800);
-        return;
-      }
+      if (!name) { input.focus(); input.style.borderColor = '#e8a0b0'; setTimeout(() => input.style.borderColor = '', 600); return; }
       const btn = document.getElementById('submitBtn');
       btn.disabled = true; btn.textContent = 'Sending…';
       await notifyHost(name, 'yes');
@@ -392,30 +403,23 @@
     }
   }
 
-  document.getElementById('rsvpName').addEventListener('keydown', e => {
-    if (e.key === 'Enter') submitRSVP('yes');
-  });
+  document.getElementById('rsvpName').addEventListener('keydown', e => { if (e.key === 'Enter') submitRSVP('yes'); });
 
   function burst() {
-    const wrap   = document.getElementById('confettiWrap');
-    const colors = ['#7BAFC9','#A8CCE0','#D6EAF3','#C8A96E','#FFFFFF','#B0D0E4'];
-    const shapes = ['●','◆','▪','✦','—'];
-    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-    for (let i = 0; i < 60; i++) {
+    const wrap = document.getElementById('confettiWrap');
+    const colors = ['#A8D4EC','#E8C5D0','#D4A853','#C8A8CC','#FFFFFF','#F2D6D6'];
+    const shapes = ['●','✦','♦','❀','✿'];
+    const cx = window.innerWidth/2, cy = window.innerHeight/2;
+    for (let i = 0; i < 70; i++) {
       const el = document.createElement('div');
-      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-      el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${6+Math.random()*10}px;opacity:1;pointer-events:none;z-index:500;`;
+      el.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${8+Math.random()*14}px;opacity:1;pointer-events:none;z-index:500;`;
       wrap.appendChild(el);
-      const a = Math.random() * Math.PI * 2, d = 120 + Math.random() * 240;
+      const a = Math.random()*Math.PI*2, d = 140+Math.random()*260;
       el.animate([
-        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
-        { transform: `translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${(Math.random()-.5)*540}deg)`, opacity: 0 }
-      ], {
-        duration: 1000 + Math.random() * 600,
-        delay: Math.random() * 150,
-        easing: 'cubic-bezier(0.1,0.8,0.3,1)',
-        fill: 'forwards'
-      }).onfinish = () => el.remove();
+        {transform:'translate(0,0) rotate(0deg)',opacity:1},
+        {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${(Math.random()-.5)*720}deg)`,opacity:0}
+      ], {duration:1000+Math.random()*700,delay:Math.random()*200,easing:'cubic-bezier(0.1,0.8,0.3,1)',fill:'forwards'}).onfinish = () => el.remove();
     }
   }
 </script>
