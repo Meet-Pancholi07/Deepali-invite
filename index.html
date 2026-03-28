@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepali's Pre-Birthday Celebration</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue-deep: #1B3A6B;
+    --blue-mid: #2C5F9E;
+    --blue-sky: #4A90C4;
+    --blue-pale: #A8CBE8;
+    --white: #FFFFFF;
+    --offwhite: #F7F5F0;
+    --cream: #EEE9DF;
+    --gold: #C9A84C;
+  }
+  html, body { min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  body {
+    background: var(--blue-deep);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding: 40px 16px 80px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .bg {
+    position: fixed; inset: 0;
+    background: linear-gradient(170deg, #0f2a52 0%, #1B3A6B 30%, #2C5F9E 65%, #4A90C4 100%);
+    z-index: 0;
+  }
+  /* Santorini dome glow */
+  .bg::after {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 90%, rgba(74,144,196,0.25) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Floating dots like whitewashed walls */
+  .dot {
+    position: fixed; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    animation: floatDot ease-in-out infinite;
+    z-index: 1; pointer-events: none;
+  }
+  @keyframes floatDot {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
+
+  .noise { position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); opacity: 0.4; z-index: 1; pointer-events: none; }
+
+  /* Card */
+  .card {
+    position: relative; z-index: 10; width: min(420px, 92vw);
+    background: var(--offwhite); border-radius: 3px; overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.2), 0 30px 80px rgba(0,0,0,0.4), 0 0 60px rgba(74,144,196,0.25);
+    animation: cardReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(40px) scale(0.97); margin-top: 16px;
+  }
+  @keyframes cardReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  .card-top {
+    background: linear-gradient(160deg, #1B3A6B 0%, #2C5F9E 100%);
+    padding: 36px 32px 28px; text-align: center; position: relative; overflow: hidden;
+  }
+  .card-top::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12) 0%, transparent 65%);
+  }
+  /* Santorini dome shape */
+  .card-top::after {
+    content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 20px;
+    background: var(--offwhite);
+    border-radius: 40px 40px 0 0;
+  }
+
+  .pre-tag { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.25em; color: var(--blue-pale); text-transform: uppercase; margin-bottom: 14px; opacity: 0; animation: fadeUp 0.6s 0.8s ease forwards; }
+  .name { font-size: clamp(2.6rem, 12vw, 4rem); font-weight: 300; font-style: italic; color: var(--white); line-height: 1; letter-spacing: -0.01em; opacity: 0; animation: fadeUp 0.8s 1s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 18px auto; opacity: 0; animation: expandLine 0.8s 1.4s ease forwards; transform: scaleX(0); }
+  @keyframes expandLine { to { opacity: 1; transform: scaleX(1); } }
+  .subtitle { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--blue-pale); text-transform: uppercase; opacity: 0; animation: fadeUp 0.6s 1.6s ease forwards; }
+
+  .card-body { padding: 36px 32px 32px; background: var(--offwhite); }
+  .detail-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .detail-row:nth-child(1) { animation-delay: 1.8s; }
+  .detail-row:nth-child(2) { animation-delay: 2.0s; }
+  .detail-row:nth-child(3) { animation-delay: 2.2s; }
+  .detail-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--blue-mid); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+  .detail-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--blue-sky); text-transform: uppercase; margin-bottom: 3px; }
+  .detail-value { font-size: 1.1rem; font-weight: 300; color: #2a2a2a; letter-spacing: 0.01em; }
+  .divider { border: none; border-top: 1px solid rgba(44,95,158,0.15); margin: 8px 0 24px; }
+  .footer-msg { text-align: center; font-style: italic; font-size: 1rem; color: #5a5a5a; line-height: 1.6; opacity: 0; animation: fadeUp 0.6s 2.4s ease forwards; }
+  .footer-msg span { color: var(--blue-mid); font-weight: 400; }
+
+  /* RSVP */
+  .rsvp-section { opacity: 0; animation: fadeUp 0.6s 2.6s ease forwards; margin-top: 24px; }
+  .rsvp-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--blue-sky); text-transform: uppercase; text-align: center; margin-bottom: 14px; }
+  .rsvp-choice { display: flex; gap: 10px; }
+  .choice-btn { flex: 1; padding: 13px 10px; border: 1.5px solid transparent; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.25s; }
+  .choice-yes { background: var(--blue-mid); color: var(--white); }
+  .choice-yes:hover { background: var(--blue-sky); transform: translateY(-2px); }
+  .choice-no { background: transparent; color: #888; border-color: rgba(0,0,0,0.15); }
+  .choice-no:hover { background: rgba(0,0,0,0.04); transform: translateY(-2px); }
+  .rsvp-name-step { display: none; margin-top: 4px; }
+  .rsvp-name-step.active { display: block; animation: fadeUp 0.4s ease forwards; }
+  .back-link { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; color: #aaa; text-transform: uppercase; cursor: pointer; margin-bottom: 10px; display: inline-block; }
+  .back-link:hover { color: var(--blue-mid); }
+  .rsvp-input-row { display: flex; gap: 8px; }
+  .rsvp-input { flex: 1; padding: 11px 14px; border: 1px solid rgba(44,95,158,0.25); border-radius: 2px; background: white; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #2a2a2a; outline: none; transition: border-color 0.2s; }
+  .rsvp-input:focus { border-color: var(--blue-mid); }
+  .rsvp-input::placeholder { color: #aaa; font-style: italic; }
+  .rsvp-btn { padding: 11px 16px; background: var(--blue-mid); color: var(--white); border: none; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.3s, transform 0.2s; white-space: nowrap; }
+  .rsvp-btn:hover { background: var(--blue-sky); transform: translateY(-1px); }
+  .rsvp-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* Response screens */
+  .response-screen {
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 48px 32px; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.7s ease;
+  }
+  .response-screen.visible { opacity: 1; pointer-events: all; }
+  .yes-screen { background: linear-gradient(160deg, #0f2a52 0%, #1B3A6B 50%, #2C5F9E 100%); }
+  .no-screen  { background: radial-gradient(ellipse at 50% 40%, #2c2c2c 0%, #111 100%); }
+  .resp-icon { font-size: 4rem; margin-bottom: 24px; display: block; animation: bounceIn 0.7s 0.2s cubic-bezier(0.16,1,0.3,1) both; }
+  @keyframes bounceIn { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .resp-title { font-size: clamp(2.2rem, 10vw, 3.4rem); font-weight: 300; font-style: italic; color: var(--white); margin-bottom: 14px; animation: fadeUp 0.6s 0.5s ease both; opacity: 0; }
+  .resp-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; line-height: 2; animation: fadeUp 0.6s 0.75s ease both; opacity: 0; }
+  .yes-screen .resp-sub { color: var(--blue-pale); }
+  .no-screen  .resp-sub { color: rgba(245,240,232,0.4); }
+  .resp-gold-line { width: 36px; height: 1px; background: var(--gold); margin: 18px auto 20px; animation: expandLine 0.6s 0.6s ease both; transform: scaleX(0); opacity: 0; }
+
+  .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 400; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .sparkle { position: absolute; pointer-events: none; font-size: 0.8rem; animation: sparklePop 1.5s ease-in-out infinite; z-index: 5; }
+  @keyframes sparklePop { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- Santorini floating dots -->
+<div class="dot" style="width:180px;height:180px;top:5%;left:-4%;animation-duration:7s;animation-delay:0s;"></div>
+<div class="dot" style="width:100px;height:100px;top:20%;right:-2%;animation-duration:9s;animation-delay:1s;"></div>
+<div class="dot" style="width:60px;height:60px;bottom:15%;left:5%;animation-duration:6s;animation-delay:2s;"></div>
+<div class="dot" style="width:140px;height:140px;bottom:5%;right:3%;animation-duration:8s;animation-delay:0.5s;"></div>
+
+<div class="card" id="card">
+  <div class="sparkle" style="top:12px;right:20px;animation-delay:0.3s;color:#A8CBE8;">✦</div>
+  <div class="sparkle" style="top:22px;right:42px;animation-delay:0.9s;font-size:0.5rem;color:#A8CBE8;">✦</div>
+  <div class="sparkle" style="top:8px;left:24px;animation-delay:1.5s;font-size:0.6rem;color:#A8CBE8;">✦</div>
+
+  <div class="card-top">
+    <p class="pre-tag">You're invited to celebrate</p>
+    <h1 class="name">Deepali's</h1>
+    <div class="gold-line"></div>
+    <p class="subtitle">Pre-birthday soirée</p>
+  </div>
+
+  <div class="card-body">
+    <div class="detail-row">
+      <div class="detail-icon">📅</div>
+      <div>
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Thursday, April 3rd 2026</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">🕓</div>
+      <div>
+        <div class="detail-label">Time</div>
+        <div class="detail-value">3:03 PM — because why not 🥂</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">📍</div>
+      <div>
+        <div class="detail-label">Venue</div>
+        <div class="detail-value">Troy Rooftop</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p class="footer-msg">
+      Come as you are — just bring good vibes,<br>
+      good laughs, and <span>love for our girl</span> 🌿
+    </p>
+
+    <div class="rsvp-section">
+      <p class="rsvp-label">Will you be there?</p>
+      <div class="rsvp-choice" id="rsvpChoice">
+        <button class="choice-btn choice-yes" onclick="showNameStep()">🥂 &nbsp;Count me in!</button>
+        <button class="choice-btn choice-no"  onclick="submitRSVP('no')">😔 &nbsp;Can't make it</button>
+      </div>
+      <div class="rsvp-name-step" id="rsvpNameStep">
+        <span class="back-link" onclick="backToChoice()">← go back</span>
+        <div class="rsvp-input-row">
+          <input class="rsvp-input" id="rsvpName" type="text" placeholder="Your name…" maxlength="30" />
+          <button class="rsvp-btn" id="submitBtn" onclick="submitRSVP('yes')">Submit ✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Thank You Screen -->
+<div class="response-screen yes-screen" id="yesScreen">
+  <span class="resp-icon">🥂</span>
+  <h2 class="resp-title" id="yesTitle">See you there!</h2>
+  <div class="resp-gold-line"></div>
+  <p class="resp-sub">You're on the list 🌊<br>Thursday · April 3rd · 3:03 PM<br>Troy Rooftop</p>
+</div>
+
+<!-- Sorry Screen -->
+<div class="response-screen no-screen" id="noScreen">
+  <span class="resp-icon">🌊</span>
+  <h2 class="resp-title">We'll miss you!</h2>
+  <div class="resp-gold-line"></div>
+  <p class="resp-sub">No worries at all —<br>we'll celebrate with you another time 💙</p>
+</div>
+
+<script>
+  const TG_TOKEN = '8700106366:AAFVTpUb70-ZMllMZ2Zx516HnhU0dvx_u8M';
+  const TG_CHAT  = '7617459479';
+
+  async function notifyHost(name, response) {
+    const emoji  = response === 'yes' ? '🥂' : '😔';
+    const status = response === 'yes' ? 'is coming!' : "can't make it.";
+    const msg    = `${emoji} *${name}* ${status}\n\n_Deepali's Pre-Birthday RSVP_`;
+    try {
+      await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'Markdown' })
+      });
+    } catch(e) {}
+  }
+
+  function showNameStep() {
+    document.getElementById('rsvpChoice').style.display = 'none';
+    document.getElementById('rsvpNameStep').classList.add('active');
+    setTimeout(() => document.getElementById('rsvpName').focus(), 300);
+  }
+
+  function backToChoice() {
+    document.getElementById('rsvpNameStep').classList.remove('active');
+    document.getElementById('rsvpChoice').style.display = 'flex';
+  }
+
+  async function submitRSVP(response) {
+    if (response === 'yes') {
+      const input = document.getElementById('rsvpName');
+      const name  = input.value.trim();
+      if (!name) { input.focus(); input.style.borderColor = '#c0392b'; setTimeout(() => input.style.borderColor = '', 600); return; }
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      await notifyHost(name, 'yes');
+      document.getElementById('yesTitle').textContent = `See you there, ${name}!`;
+      burst();
+      setTimeout(() => document.getElementById('yesScreen').classList.add('visible'), 400);
+    } else {
+      await notifyHost('Someone', 'no');
+      document.getElementById('noScreen').classList.add('visible');
+    }
+  }
+
+  document.getElementById('rsvpName').addEventListener('keydown', e => { if (e.key === 'Enter') submitRSVP('yes'); });
+
+  function burst() {
+    const wrap = document.getElementById('confettiWrap');
+    const colors = ['#1B3A6B','#2C5F9E','#4A90C4','#A8CBE8','#FFFFFF','#C9A84C'];
+    const shapes = ['●','▲','■','✦','♦'];
+    const cx = window.innerWidth/2, cy = window.innerHeight/2;
+    for (let i = 0; i < 70; i++) {
+      const el = document.createElement('div');
+      el.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${8+Math.random()*12}px;opacity:1;pointer-events:none;z-index:500;`;
+      wrap.appendChild(el);
+      const a = Math.random()*Math.PI*2, d = 140+Math.random()*260;
+      el.animate([{transform:'translate(0,0) rotate(0deg)',opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${(Math.random()-.5)*720}deg)`,opacity:0}],
+        {duration:1000+Math.random()*600,delay:Math.random()*200,easing:'cubic-bezier(0.1,0.8,0.3,1)',fill:'forwards'}).onfinish = () => el.remove();
+    }
+  }
+</script>
+</body>
+</html>
