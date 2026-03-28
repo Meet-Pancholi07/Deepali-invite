@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepali's Pre-Birthday Celebration</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue:      #7BAFC9;
+    --blue-soft: #A8CCE0;
+    --blue-pale: #D6EAF3;
+    --white:     #FFFFFF;
+    --offwhite:  #FAFCFE;
+    --gold:      #C8A96E;
+    --text:      #2C4A5A;
+    --text-soft: #7A9AAA;
+  }
+
+  html, body { min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: flex-start; padding: 48px 16px 80px;
+    font-family: 'Montserrat', sans-serif;
+    background: #EAF4FA;
+  }
+
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(180deg, #F0F8FD 0%, #D6EAF3 45%, #EAF4FA 100%);
+  }
+
+  /* Subtle horizon line */
+  .bg::after {
+    content: '';
+    position: fixed; bottom: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(to top, rgba(255,255,255,0.6) 0%, transparent 100%);
+    z-index: 0; pointer-events: none;
+  }
+
+  .noise {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  /* Card */
+  .card {
+    position: relative; z-index: 10; width: min(400px, 92vw);
+    background: var(--white);
+    border-radius: 2px;
+    box-shadow:
+      0 0 0 1px rgba(123,175,201,0.15),
+      0 2px 4px rgba(123,175,201,0.08),
+      0 24px 60px rgba(100,150,180,0.16);
+    animation: cardReveal 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
+    opacity: 0; transform: translateY(30px) scale(0.98);
+    margin-top: 8px;
+  }
+  @keyframes cardReveal { to { opacity:1; transform:translateY(0) scale(1); } }
+
+  /* Thin top accent line */
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--blue-soft) 30%, var(--blue) 50%, var(--blue-soft) 70%, transparent 100%);
+  }
+
+  /* Header */
+  .card-top {
+    background: var(--white);
+    padding: 48px 36px 36px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--blue-pale);
+  }
+
+  .pre-tag {
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.58rem; letter-spacing: 0.35em; color: var(--blue-soft);
+    text-transform: uppercase; margin-bottom: 18px;
+    opacity: 0; animation: fadeUp 0.6s 0.8s ease forwards;
+  }
+
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 13vw, 4.6rem); font-weight: 300; font-style: italic;
+    color: var(--text); line-height: 1; letter-spacing: 0.01em;
+    opacity: 0; animation: fadeUp 0.8s 1s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .gold-line {
+    width: 36px; height: 1px;
+    background: var(--gold);
+    margin: 22px auto;
+    opacity: 0; transform: scaleX(0);
+    animation: expandLine 0.8s 1.4s ease forwards;
+  }
+  @keyframes expandLine { to { opacity:1; transform:scaleX(1); } }
+
+  .subtitle {
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.55rem; letter-spacing: 0.35em; color: var(--blue-soft);
+    text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.6s 1.6s ease forwards;
+  }
+
+  /* Body */
+  .card-body { padding: 36px 36px 32px; }
+
+  .detail-row {
+    display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px;
+    opacity: 0; animation: fadeUp 0.6s ease forwards;
+  }
+  .detail-row:nth-child(1) { animation-delay: 1.8s; }
+  .detail-row:nth-child(2) { animation-delay: 2.0s; }
+  .detail-row:nth-child(3) { animation-delay: 2.2s; }
+
+  .detail-icon {
+    width: 34px; height: 34px; flex-shrink: 0; margin-top: 1px;
+    border: 1px solid var(--blue-pale);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    background: var(--offwhite);
+  }
+
+  .detail-label {
+    font-family: 'Montserrat', sans-serif; font-weight: 400;
+    font-size: 0.52rem; letter-spacing: 0.25em; color: var(--blue-soft);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 300; color: var(--text); letter-spacing: 0.02em;
+  }
+
+  .divider {
+    border: none; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue-pale), transparent);
+    margin: 4px 0 26px;
+  }
+
+  .footer-msg {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.05rem; color: var(--text-soft); line-height: 1.8;
+    opacity: 0; animation: fadeUp 0.6s 2.4s ease forwards;
+  }
+  .footer-msg span { color: var(--blue); }
+
+  /* RSVP */
+  .rsvp-section {
+    opacity: 0; animation: fadeUp 0.6s 2.6s ease forwards;
+    margin-top: 26px;
+  }
+
+  .rsvp-label {
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.55rem; letter-spacing: 0.3em; color: var(--blue-soft);
+    text-transform: uppercase; text-align: center; margin-bottom: 14px;
+  }
+
+  .rsvp-choice { display: flex; gap: 10px; }
+
+  .choice-btn {
+    flex: 1; padding: 13px 10px;
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+    cursor: pointer; border-radius: 1px; transition: all 0.25s;
+  }
+
+  .choice-yes {
+    background: var(--text); color: var(--white); border: 1px solid var(--text);
+  }
+  .choice-yes:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); }
+
+  .choice-no {
+    background: transparent; color: var(--text-soft);
+    border: 1px solid var(--blue-pale);
+  }
+  .choice-no:hover { border-color: var(--blue-soft); color: var(--text); transform: translateY(-2px); }
+
+  .rsvp-name-step { display: none; margin-top: 4px; }
+  .rsvp-name-step.active { display: block; animation: fadeUp 0.4s ease forwards; }
+
+  .back-link {
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.5rem; letter-spacing: 0.2em; color: #ccc;
+    text-transform: uppercase; cursor: pointer; margin-bottom: 12px; display: inline-block;
+  }
+  .back-link:hover { color: var(--blue); }
+
+  .rsvp-input-row { display: flex; gap: 8px; }
+
+  .rsvp-input {
+    flex: 1; padding: 12px 16px;
+    border: 1px solid var(--blue-pale); border-radius: 1px;
+    background: var(--offwhite);
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem;
+    color: var(--text); outline: none; transition: border-color 0.2s;
+  }
+  .rsvp-input:focus { border-color: var(--blue-soft); }
+  .rsvp-input::placeholder { color: #C8D8E4; }
+
+  .rsvp-btn {
+    padding: 12px 18px;
+    background: var(--text); color: var(--white);
+    border: none; border-radius: 1px;
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; white-space: nowrap; transition: all 0.25s;
+  }
+  .rsvp-btn:hover { background: var(--blue); transform: translateY(-1px); }
+  .rsvp-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Response screens */
+  .response-screen {
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 48px 32px; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
+  }
+  .response-screen.visible { opacity: 1; pointer-events: all; }
+
+  .yes-screen { background: linear-gradient(180deg, #F0F8FD 0%, #FFFFFF 100%); }
+  .no-screen  { background: linear-gradient(180deg, #F7F7F7 0%, #FFFFFF 100%); }
+
+  .resp-icon {
+    font-size: 2.4rem; margin-bottom: 28px; display: block;
+    animation: bounceIn 0.7s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes bounceIn { from { transform:scale(0.4); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+  .resp-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
+    font-size: clamp(2.4rem, 10vw, 3.6rem); margin-bottom: 16px;
+    animation: fadeUp 0.6s 0.5s ease both; opacity: 0;
+  }
+  .yes-screen .resp-title { color: var(--text); }
+  .no-screen  .resp-title { color: #999; }
+
+  .resp-gold-line {
+    width: 36px; height: 1px; background: var(--gold);
+    margin: 0 auto 20px;
+    animation: expandLine 0.6s 0.6s ease both; transform: scaleX(0); opacity: 0;
+  }
+
+  .resp-sub {
+    font-family: 'Montserrat', sans-serif; font-weight: 300;
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; line-height: 2.2;
+    animation: fadeUp 0.6s 0.75s ease both; opacity: 0;
+  }
+  .yes-screen .resp-sub { color: var(--blue-soft); }
+  .no-screen  .resp-sub { color: #bbb; }
+
+  .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 400; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<div class="card" id="card">
+
+  <div class="card-top">
+    <p class="pre-tag">Join us to celebrate</p>
+    <h1 class="name">Deepali's</h1>
+    <div class="gold-line"></div>
+    <p class="subtitle">Pre-birthday soirée</p>
+  </div>
+
+  <div class="card-body">
+    <div class="detail-row">
+      <div class="detail-icon">📅</div>
+      <div>
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Friday, April 3rd 2026</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">🕒</div>
+      <div>
+        <div class="detail-label">Time</div>
+        <div class="detail-value">3:03 PM — because why not 🥂</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-icon">📍</div>
+      <div>
+        <div class="detail-label">Venue</div>
+        <div class="detail-value">Troy Rooftop</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="footer-msg">
+      Come as you are — just bring good vibes,<br>
+      good laughs, and <span>love for our girl</span> 🤍
+    </p>
+
+    <div class="rsvp-section">
+      <p class="rsvp-label">Will you be there?</p>
+      <div class="rsvp-choice" id="rsvpChoice">
+        <button class="choice-btn choice-yes" onclick="showNameStep()">🥂 &nbsp;Count me in</button>
+        <button class="choice-btn choice-no"  onclick="submitRSVP('no')">😔 &nbsp;Can't make it</button>
+      </div>
+      <div class="rsvp-name-step" id="rsvpNameStep">
+        <span class="back-link" onclick="backToChoice()">← go back</span>
+        <div class="rsvp-input-row">
+          <input class="rsvp-input" id="rsvpName" type="text" placeholder="Your name…" maxlength="30" />
+          <button class="rsvp-btn" id="submitBtn" onclick="submitRSVP('yes')">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Thank You -->
+<div class="response-screen yes-screen" id="yesScreen">
+  <span class="resp-icon">🥂</span>
+  <h2 class="resp-title" id="yesTitle">See you there!</h2>
+  <div class="resp-gold-line"></div>
+  <p class="resp-sub">You're on the list 🤍<br>Friday · April 3rd · 3:03 PM<br>Troy Rooftop</p>
+</div>
+
+<!-- Sorry -->
+<div class="response-screen no-screen" id="noScreen">
+  <span class="resp-icon">🤍</span>
+  <h2 class="resp-title">We'll miss you</h2>
+  <div class="resp-gold-line"></div>
+  <p class="resp-sub">No worries at all —<br>we'll celebrate with you another time</p>
+</div>
+
+<script>
+  const TG_TOKEN = '8700106366:AAFVTpUb70-ZMllMZ2Zx516HnhU0dvx_u8M';
+  const TG_CHAT  = '7617459479';
+
+  async function notifyHost(name, response) {
+    const emoji  = response === 'yes' ? '🥂' : '😔';
+    const status = response === 'yes' ? 'is coming!' : "can't make it.";
+    const msg    = `${emoji} *${name}* ${status}\n\n_Deepali's Pre-Birthday RSVP_`;
+    try {
+      await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'Markdown' })
+      });
+    } catch(e) {}
+  }
+
+  function showNameStep() {
+    document.getElementById('rsvpChoice').style.display = 'none';
+    document.getElementById('rsvpNameStep').classList.add('active');
+    setTimeout(() => document.getElementById('rsvpName').focus(), 300);
+  }
+
+  function backToChoice() {
+    document.getElementById('rsvpNameStep').classList.remove('active');
+    document.getElementById('rsvpChoice').style.display = 'flex';
+  }
+
+  async function submitRSVP(response) {
+    if (response === 'yes') {
+      const input = document.getElementById('rsvpName');
+      const name  = input.value.trim();
+      if (!name) {
+        input.focus();
+        input.style.borderColor = '#A8CCE0';
+        setTimeout(() => input.style.borderColor = '', 800);
+        return;
+      }
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      await notifyHost(name, 'yes');
+      document.getElementById('yesTitle').textContent = `See you there, ${name}!`;
+      burst();
+      setTimeout(() => document.getElementById('yesScreen').classList.add('visible'), 400);
+    } else {
+      await notifyHost('Someone', 'no');
+      document.getElementById('noScreen').classList.add('visible');
+    }
+  }
+
+  document.getElementById('rsvpName').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitRSVP('yes');
+  });
+
+  function burst() {
+    const wrap   = document.getElementById('confettiWrap');
+    const colors = ['#7BAFC9','#A8CCE0','#D6EAF3','#C8A96E','#FFFFFF','#B0D0E4'];
+    const shapes = ['●','◆','▪','✦','—'];
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+      el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${6+Math.random()*10}px;opacity:1;pointer-events:none;z-index:500;`;
+      wrap.appendChild(el);
+      const a = Math.random() * Math.PI * 2, d = 120 + Math.random() * 240;
+      el.animate([
+        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+        { transform: `translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${(Math.random()-.5)*540}deg)`, opacity: 0 }
+      ], {
+        duration: 1000 + Math.random() * 600,
+        delay: Math.random() * 150,
+        easing: 'cubic-bezier(0.1,0.8,0.3,1)',
+        fill: 'forwards'
+      }).onfinish = () => el.remove();
+    }
+  }
+</script>
+</body>
+</html>
